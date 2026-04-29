@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  --color-primary: #ff0077; /* Electric Pink */
+  --color-secondary: #facc15; /* Warning Yellow */
+  --color-accent: #22c55e; /* Cyber Green */
+  
+  --color-background: #0d0d15; /* Midnight Purple */
+  --color-foreground: #e2e2f0; /* Lavender White */
+  
+  --color-card: #151525;
+  --color-card-foreground: #e2e2f0;
+  
+  --color-muted: #1f1f35;
+  --color-muted-foreground: #8a8ab0;
+
+  --radius-xl: 1rem;
+}
+
+/* Synthwave Engineering Aesthetic */
+body {
+  background-color: #0d0d15;
+  color: #e2e2f0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Cyber Grid Background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 0, 119, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 0, 119, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Glow effects for that "Better" look */
+.pink-glow {
+  text-shadow: 0 0 10px rgba(255, 0, 119, 0.5);
+}
+
+.yellow-glow {
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+}
+
+.cyber-card {
+  background: rgba(21, 21, 37, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 0, 119, 0.1);
+  transition: all 0.3s ease;
+}
+
+.cyber-card:hover {
+  border-color: rgba(255, 0, 119, 0.4);
+  box-shadow: 0 0 30px -10px rgba(255, 0, 119, 0.3);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff0077;
+  border-radius: 10px;
+}
