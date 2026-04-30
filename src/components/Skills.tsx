@@ -1,31 +1,34 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const skillGroups = [
   {
     category: "Languages & Core",
-    items: "JavaScript/TypeScript, Python, PHP, Java, Kotlin, Swift",
+    items: "JavaScript/TypeScript, Python, PHP, Go",
   },
   {
     category: "Web Frontend",
-    items: "React, Next.js, Vue, Nuxt, Tailwind CSS, Livewire",
+    items: "React, Next.js, Vue, Nuxt, Tailwind CSS, Livewire, Ant Design, Material UI, shadcn/ui",
   },
   {
     category: "Backend & Systems",
-    items: "Node.js, Laravel, Express, REST APIs, Supabase, Firebase",
+    items: "Node.js, Django, Flask, Laravel, Go, Express, REST APIs, Supabase, Firebase, MongoDB, MySQL",
   },
   {
     category: "DevOps & Cloud",
-    items: "Docker, Kubernetes, AWS, Vercel, CI/CD, Git, Linux",
+    items: "Docker, CI/CD, Git, Linux, GitHub/GitLab, Cloudflare, Postman",
   },
   {
     category: "Mobile App Dev",
-    items: "React Native, Flutter, iOS/Android Deployment",
+    items: "React Native, Flutter, Android Deployment",
   },
 ];
 
 export default function Skills() {
+  const [parent] = useAutoAnimate();
+
   return (
     <section id="skills" className="py-24 px-6 border-y border-white/5 overflow-hidden">
       <div className="max-w-4xl mx-auto">
@@ -38,7 +41,7 @@ export default function Skills() {
           ### Tech Stack
         </motion.h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 font-mono">
+        <div ref={parent} className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 font-mono">
           {skillGroups.map((group, idx) => (
             <motion.div 
               key={group.category} 

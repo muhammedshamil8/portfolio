@@ -1,12 +1,13 @@
 "use client";
 
+import Header from "@/components/Header";
+import Footer from "@/components/Contact";
 import { projects, Project } from "@/data/projects";
 import Image from "next/image";
-import { ExternalLink, Maximize2, X, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ExternalLink, Maximize2, X, ChevronDown, ChevronUp, Search } from "lucide-react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import Link from "next/link";
 
 const GithubIcon = ({ size = 20 }: { size?: number }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -97,6 +98,15 @@ function ProjectModal({ project, isOpen, onClose }: { project: Project; isOpen: 
                     Repository <GithubIcon size={20} />
                   </a>
                 )}
+                {project.appLink && (
+                  <a 
+                    href={project.appLink} 
+                    target="_blank" 
+                    className="sm:col-span-2 flex items-center justify-center gap-3 px-8 py-4 bg-secondary text-black font-black rounded-2xl hover:scale-[1.02] transition-transform text-center uppercase text-sm tracking-widest"
+                  >
+                    Download Application <ExternalLink size={20} />
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -118,7 +128,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
+        transition={{ duration: 0.5, delay: index * 0.05 }}
         className="cyber-card p-6 rounded-3xl group flex flex-col h-full ring-1 ring-white/5 hover:ring-primary/40 transition-all duration-700 bg-[#0d0d15] hover:shadow-[0_0_40px_rgba(255,0,119,0.1)]"
       >
         <div className="relative aspect-video rounded-2xl overflow-hidden mb-8 border border-white/5 bg-black/40">
@@ -180,7 +190,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           )}
           
           <div className="flex flex-wrap gap-2.5 mt-auto pt-6 border-t border-white/5">
-            {project.badges.slice(0, 3).map((badge, i) => (
+            {project.badges.map((badge, i) => (
               <span 
                 key={i} 
                 className="text-[10px] font-mono font-bold text-white/10 uppercase tracking-widest"
@@ -201,32 +211,113 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
-export default function Portfolio() {
-  const featuredProjects = projects
-    .sort((a, b) => (a.rank || 99) - (b.rank || 99))
-    .slice(0, 3);
+export default function AllProjectsPage() {
+  const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const [parent] = useAutoAnimate();
+
+  const categories = useMemo(() => {
+    const cats = ["All", ...new Set(projects.map(p => p.category))];
+    return cats;
+  }, []);
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter(p => {
+      const matchesFilter = filter === "All" || p.category === filter;
+      const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase()) || 
+                            p.description.toLowerCase().includes(search.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+  }, [filter, search]);
 
   return (
-    <section id="portfolio" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-end justify-between mb-16">
-          <h2 className="text-xl font-bold font-mono text-secondary yellow-glow uppercase tracking-[0.4em]">
-            ### Works
-          </h2>
-          <Link 
-            href="/projects" 
-            className="group flex items-center gap-2 text-[10px] font-mono text-white/40 hover:text-primary transition-colors uppercase tracking-[0.2em] mb-1"
-          >
-            View All <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
-          {featuredProjects.map((project, idx) => (
-            <ProjectCard key={project.id} project={project} index={idx} />
-          ))}
-        </div>
+    <div className="bg-[#0d0d15] min-h-screen text-[#e2e2f0] selection:bg-[#ff0077] selection:text-white relative overflow-x-hidden">
+      {/* Decorative Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/3" />
       </div>
-    </section>
+
+      <div className="fixed inset-0 bg-grain pointer-events-none opacity-20 z-[100]" />
+      <Header />
+      
+      <main className="relative z-10 pt-44 pb-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Header Section */}
+          <div className="mb-24">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h1 className="text-6xl md:text-[8vw] font-black text-white mb-8 tracking-tighter leading-none">
+                RE<span className="text-primary italic">PO_</span>SITORY
+              </h1>
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+                <p className="text-foreground/40 font-mono text-sm max-w-xl leading-relaxed uppercase tracking-widest border-l-2 border-white/5 pl-6">
+                  // Showcasing technical projects and production systems <br />
+                  // Focused on high-performance architecture and scalable applications
+                </p>
+                
+                {/* Search & Filter Container */}
+                <div className="flex flex-col sm:flex-row gap-6 w-full lg:w-auto">
+                  <div className="relative group flex-1 sm:w-80">
+                    <div className="absolute inset-0 bg-primary/5 blur-xl group-focus-within:bg-primary/10 transition-all rounded-2xl" />
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary transition-colors" size={20} />
+                    <input 
+                      type="text" 
+                      placeholder="SEARCH MISSION..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 pl-14 pr-6 text-sm font-mono focus:outline-none focus:border-primary transition-all placeholder:text-white/10 relative z-10"
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Filter Bar - Sticky-ish */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-wrap gap-3 mb-16 p-2 bg-white/[0.02] border border-white/5 rounded-[2rem] w-fit mx-auto lg:mx-0 ring-1 ring-white/5 backdrop-blur-md"
+          >
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-8 py-3.5 rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 ${
+                  filter === cat 
+                  ? "bg-primary text-white shadow-[0_0_30px_rgba(255,0,119,0.3)] ring-1 ring-primary/50" 
+                  : "text-white/30 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </motion.div>
+          
+          {/* Projects Grid */}
+          <div 
+            ref={parent}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-14"
+          >
+            {filteredProjects.map((project, idx) => (
+              <ProjectCard key={project.id} project={project} index={idx} />
+            ))}
+          </div>
+
+          {/* Empty State */}
+          {filteredProjects.length === 0 && (
+            <div className="py-60 text-center border-2 border-dashed border-white/5 rounded-[3rem]">
+              <p className="text-white/10 font-mono text-sm uppercase tracking-[0.5em] animate-pulse">No projects found matching the selected criteria</p>
+            </div>
+          )}
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 }

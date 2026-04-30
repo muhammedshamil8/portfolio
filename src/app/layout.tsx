@@ -21,6 +21,13 @@ export const metadata: Metadata = {
   title: "Shamil | Full-Stack Web & App Developer",
   description: "Personal portfolio of Mohammed Shamil K P - Full-Stack Developer specializing in React, Next.js, and Mobile App Development.",
   keywords: ["Full-Stack Developer", "Next.js Portfolio", "React Native", "Flutter", "Web Development"],
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -31,12 +38,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${outfit.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning
+      className={`${inter.variable} ${outfit.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
       <body 
         className="font-sans min-h-screen bg-background text-foreground selection:bg-primary/30 selection:text-primary"
-        suppressHydrationWarning
       >
         {children}
       </body>
