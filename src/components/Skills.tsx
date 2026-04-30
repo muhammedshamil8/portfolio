@@ -5,23 +5,27 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const skillGroups = [
   {
-    category: "Languages & Core",
-    items: "JavaScript/TypeScript, Python, PHP, Go",
+    category: "Languages",
+    items: "JavaScript, TypeScript, PHP, Go, Python",
   },
   {
-    category: "Web Frontend",
-    items: "React, Next.js, Vue, Nuxt, Tailwind CSS, Livewire, Ant Design, Material UI, shadcn/ui",
+    category: "Frontend",
+    items: "React, Next.js, Vue, Nuxt, Tailwind CSS, Ant Design, Material UI, shadcn/ui",
   },
   {
-    category: "Backend & Systems",
-    items: "Node.js, Django, Flask, Laravel, Go, Express, REST APIs, Supabase, Firebase, MongoDB, MySQL",
+    category: "Backend",
+    items: "Node.js, Express, Laravel, REST APIs, Prisma",
   },
   {
-    category: "DevOps & Cloud",
+    category: "Database & BaaS",
+    items: "MySQL, MongoDB, PostgreSQL, SQLite, Firebase, Supabase",
+  },
+  {
+    category: "Tools & DevOps",
     items: "Docker, CI/CD, Git, Linux, GitHub/GitLab, Cloudflare, Postman",
   },
   {
-    category: "Mobile App Dev",
+    category: "Mobile",
     items: "React Native, Flutter, Android Deployment",
   },
 ];
@@ -46,7 +50,7 @@ export default function Skills() {
             <motion.div 
               key={group.category} 
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1, duration: 0.5 }}
               className="group relative"

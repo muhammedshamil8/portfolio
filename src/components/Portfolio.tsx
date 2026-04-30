@@ -14,8 +14,8 @@ const GithubIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 );
 
-function ProjectModal({ project, isOpen, onClose }: { project: Project; isOpen: boolean; onClose: () => void }) {
-  if (!isOpen) return null;
+function ProjectModal({ project, isOpen, onClose }: { project: Project | null; isOpen: boolean; onClose: () => void }) {
+  if (!isOpen || !project) return null;
 
   return (
     <AnimatePresence>
@@ -23,29 +23,30 @@ function ProjectModal({ project, isOpen, onClose }: { project: Project; isOpen: 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md"
+        className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md"
         onClick={onClose}
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="bg-[#12121a] border border-white/10 rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto cyber-card p-6 md:p-12 scrollbar-hide"
+          className="bg-[#12121a] border border-white/10 rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto cyber-card p-6 md:p-12 scrollbar-hide relative"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between items-start mb-10">
+          <button 
+            onClick={onClose}
+            className="absolute top-6 right-6 md:top-10 md:right-10 p-3 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all ring-1 ring-white/10 z-10"
+          >
+            <X size={24} />
+          </button>
+
+          <div className="flex flex-col md:flex-row justify-between items-start mb-10 pr-12">
             <div>
               <span className="text-primary text-[10px] font-bold uppercase tracking-[0.3em] px-4 py-1.5 bg-primary/10 rounded-full mb-6 inline-block ring-1 ring-primary/20">
                 {project.category}
               </span>
-              <h2 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tighter leading-none">{project.title}</h2>
+              <h2 className="text-3xl md:text-6xl font-black text-white mb-4 tracking-tighter leading-none">{project.title}</h2>
             </div>
-            <button 
-              onClick={onClose}
-              className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all ring-1 ring-white/10"
-            >
-              <X size={24} />
-            </button>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
@@ -106,108 +107,108 @@ function ProjectModal({ project, isOpen, onClose }: { project: Project; isOpen: 
   );
 }
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({ project, index, onOpen }: { project: Project; index: number; onOpen: (p: Project) => void }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [parent] = useAutoAnimate();
 
   return (
-    <>
-      <motion.div 
-        layout
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        className="cyber-card p-6 rounded-3xl group flex flex-col h-full ring-1 ring-white/5 hover:ring-primary/40 transition-all duration-700 bg-[#0d0d15] hover:shadow-[0_0_40px_rgba(255,0,119,0.1)]"
-      >
-        <div className="relative aspect-video rounded-2xl overflow-hidden mb-8 border border-white/5 bg-black/40">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-6 backdrop-blur-[2px]">
-            <motion.button 
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setIsModalOpen(true)}
-              className="p-4 bg-primary text-white rounded-2xl shadow-xl shadow-primary/20"
-            >
-              <Maximize2 size={24} />
-            </motion.button>
-            <motion.a 
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              href={project.link} 
-              target="_blank" 
-              className="p-4 bg-white/10 text-white rounded-2xl backdrop-blur-xl border border-white/20"
-            >
-              <ExternalLink size={24} />
-            </motion.a>
-          </div>
+    <motion.div 
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="cyber-card p-6 rounded-3xl group flex flex-col h-full ring-1 ring-white/5 hover:ring-primary/40 transition-all duration-700 bg-[#0d0d15] hover:shadow-[0_0_40px_rgba(255,0,119,0.1)]"
+    >
+      <div className="relative aspect-video rounded-2xl overflow-hidden mb-8 border border-white/5 bg-black/40">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+        <div className="absolute inset-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-6 backdrop-blur-[2px] pointer-events-auto">
+          <motion.button 
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => onOpen(project)}
+            className="p-4 bg-primary text-white rounded-2xl shadow-xl shadow-primary/20"
+          >
+            <Maximize2 size={24} />
+          </motion.button>
+          <motion.a 
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            href={project.link} 
+            target="_blank" 
+            className="p-4 bg-white/10 text-white rounded-2xl backdrop-blur-xl border border-white/20"
+          >
+            <ExternalLink size={24} />
+          </motion.a>
+        </div>
+      </div>
+
+      <div className="flex-1 flex flex-col" ref={parent}>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-[10px] font-black text-primary px-3 py-1 bg-primary/10 rounded-full uppercase tracking-[0.2em] ring-1 ring-primary/20">
+            {project.category}
+          </span>
+          <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
         </div>
 
-        <div className="flex-1 flex flex-col" ref={parent}>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-[10px] font-black text-primary px-3 py-1 bg-primary/10 rounded-full uppercase tracking-[0.2em] ring-1 ring-primary/20">
-              {project.category}
+        <h3 className="text-2xl font-black text-white group-hover:text-primary transition-colors font-mono tracking-tighter mb-4">
+          {project.title}
+        </h3>
+        
+        <p className={`text-[13px] text-foreground/50 font-mono leading-relaxed mb-6 ${!isExpanded ? 'line-clamp-3' : ''}`}>
+          {project.description}
+        </p>
+        
+        {project.description.length > 80 && (
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="text-[10px] font-bold text-primary/60 flex items-center gap-1.5 hover:text-primary transition-colors uppercase tracking-[0.2em] mb-6 w-fit"
+          >
+            {isExpanded ? (
+              <>Collapse <ChevronUp size={12} /></>
+            ) : (
+              <>Read More <ChevronDown size={12} /></>
+            )}
+          </button>
+        )}
+        
+        <div className="flex flex-wrap gap-2.5 mt-auto pt-6 border-t border-white/5">
+          {project.badges.slice(0, 3).map((badge, i) => (
+            <span 
+              key={i} 
+              className="text-[10px] font-mono font-bold text-white/10 uppercase tracking-widest"
+            >
+              #{badge.text.replace(/\s+/g, "").toLowerCase()}
             </span>
-            <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
-          </div>
-
-          <h3 className="text-2xl font-black text-white group-hover:text-primary transition-colors font-mono tracking-tighter mb-4">
-            {project.title}
-          </h3>
-          
-          <p className={`text-[13px] text-foreground/50 font-mono leading-relaxed mb-6 ${!isExpanded ? 'line-clamp-3' : ''}`}>
-            {project.description}
-          </p>
-          
-          {project.description.length > 80 && (
-            <button 
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="text-[10px] font-bold text-primary/60 flex items-center gap-1.5 hover:text-primary transition-colors uppercase tracking-[0.2em] mb-6 w-fit"
-            >
-              {isExpanded ? (
-                <>Collapse <ChevronUp size={12} /></>
-              ) : (
-                <>Read More <ChevronDown size={12} /></>
-              )}
-            </button>
-          )}
-          
-          <div className="flex flex-wrap gap-2.5 mt-auto pt-6 border-t border-white/5">
-            {project.badges.slice(0, 3).map((badge, i) => (
-              <span 
-                key={i} 
-                className="text-[10px] font-mono font-bold text-white/10 uppercase tracking-widest"
-              >
-                #{badge.text.replace(/\s+/g, "").toLowerCase()}
-              </span>
-            ))}
-          </div>
+          ))}
         </div>
-      </motion.div>
-      
-      <ProjectModal 
-        project={project} 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-      />
-    </>
+      </div>
+    </motion.div>
   );
 }
 
 export default function Portfolio() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  
   const featuredProjects = projects
     .sort((a, b) => (a.rank || 99) - (b.rank || 99))
     .slice(0, 3);
 
   return (
-    <section id="portfolio" className="py-24 px-6">
+    <section id="portfolio" className="py-24 px-6 relative">
+      {/* Project Modal - Rendered outside the local card context */}
+      <ProjectModal 
+        project={selectedProject} 
+        isOpen={!!selectedProject} 
+        onClose={() => setSelectedProject(null)} 
+      />
+
       <div className="max-w-6xl mx-auto">
         <div className="flex items-end justify-between mb-16">
           <h2 className="text-xl font-bold font-mono text-secondary yellow-glow uppercase tracking-[0.4em]">
@@ -223,7 +224,7 @@ export default function Portfolio() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
           {featuredProjects.map((project, idx) => (
-            <ProjectCard key={project.id} project={project} index={idx} />
+            <ProjectCard key={project.id} project={project} index={idx} onOpen={setSelectedProject} />
           ))}
         </div>
       </div>
