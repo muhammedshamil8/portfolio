@@ -139,6 +139,7 @@ export const projects: Project[] = [
     id: "09",
     title: "RankersForum",
     category: "Freelance",
+    image: "/images/portfolio/rankers-forum.png",
     description: "Educational forum and resource sharing platform for competitive exams.",
     detailedDescription: "Provides a structured environment for students to share resources and discuss topics. Optimized for mobile and desktop using Tailwind CSS.",
     badges: [
@@ -199,7 +200,7 @@ export const projects: Project[] = [
   },
   {
     id: "13",
-    title: "Blockchain Drug Abuse",
+    title: "SafeSpot - Blockchain Drug Abuse",
     category: "Hackathon",
     description: "Award-winning solution using blockchain to track and prevent pharmaceutical abuse.",
     detailedDescription: "Winner of the national hackathon. Built using Solana for immutable tracking and a React Native Expo app for frontline access. Integrated Vector DB for advanced analytics.",
