@@ -298,7 +298,7 @@ export const projects: Project[] = [
   {
     id: "21",
     title: "Marriage Analyzer",
-    category: "personal",
+    category: "Personal",
     description: "A tool for moms to analyze wedding invitation data with interactive visualizations.",
     detailedDescription: "To help my mom handle invitation data for my brother's wedding, I built a React and supabase application. It allows her to easily input and manage guest information, and provides interactive charts to visualize the data for better planning.",
     link: "https://mrg-peeps-lister.vercel.app/",
