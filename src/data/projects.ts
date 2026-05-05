@@ -154,6 +154,7 @@ export const projects: Project[] = [
     category: "Real-world",
     description: "Internal tool for automated attendance tracking and reporting.",
     detailedDescription: "Simplified the process of recording attendance across events. Built with a Node.js backend and a React frontend.",
+    link: "https://attendance-collection.vercel.app/signin",
     badges: [
       { text: "React", color: "blue" },
       { text: "Node.js", color: "green" },
@@ -168,6 +169,7 @@ export const projects: Project[] = [
     image: "/images/portfolio/emergelap.jpeg",
     description: "Event management portal for large-scale college festivals.",
     detailedDescription: "Handled registrations and scheduling for numerous college events. Used Supabase for real-time updates during the festival.",
+    link: "https://www.emerge2026.in/",
     badges: [
       { text: "React", color: "blue" },
       { text: "Supabase", color: "emerald" }
@@ -240,5 +242,109 @@ export const projects: Project[] = [
       { text: "Airtable", color: "yellow" }
     ],
     rank: 15
+  },
+  {
+    id: "17",
+    title: "Kajra",
+    category: "Freelance",
+    description: "PSMO College Arts festival management system with real-time result updates",
+    detailedDescription: "Built a React-based admin panel to manage sports events, registrations, and results. Integrated with a Node.js backend for seamless data handling.",
+    link: "https://kajra.vercel.app",
+    badges: [
+      { text: "React", color: "blue" },
+      { text: "Firebase", color: "green" }
+    ],
+    rank: 17
+  },
+  {
+    id: "18",
+    title: "Artify",
+    category: "College",
+    description: "EMEA College arts festival management system with real-time result updates",
+    detailedDescription: "Real-time leaderboard and event tracker for college arts. posters and event details. Built with React and Node.js for instant updates and scalability.",
+    link: "https://artify.connectemea.in",
+    badges: [
+      { text: "React", color: "blue" },
+      { text: "Node.js", color: "green" }
+    ],
+    rank: 18
+  },
+  {
+    id: "19",
+    title: "Elevate",
+    category: "Community",
+    description: "Connect EMEA Elevate program participant progress monitoring platform   ",
+    detailedDescription: "A dashboard for tracking participant progress in the Elevate program. Built with React and integrated with Supabase for real-time data updates.",
+    link: "https://elevate.connectemea.in",
+    badges: [
+      { text: "Next.js", color: "blue" },
+      { text: "Supabase", color: "emerald" }
+    ],
+    rank: 19
+  },
+  {
+    id: "20",
+    title: "HerSakhi",
+    category: "Hackathon",
+    description: "Ayush based solution for women's health awareness and support.",
+    detailedDescription: "Developed a mobile app using React Native to provide health tracking and support for women's health.",
+    link: "https://hersakhi-brown.vercel.app/",
+    badges: [
+      { text: "React Native", color: "blue" },
+      { text: "Dart", color: "green" }
+    ],
+    rank: 20
+  },
+  {
+    id: "21",
+    title: "Marriage Analyzer",
+    category: "personal",
+    description: "A tool for moms to analyze wedding invitation data with interactive visualizations.",
+    detailedDescription: "To help my mom handle invitation data for my brother's wedding, I built a React and supabase application. It allows her to easily input and manage guest information, and provides interactive charts to visualize the data for better planning.",
+    link: "https://mrg-peeps-lister.vercel.app/",
+    badges: [
+      { text: "React", color: "blue" },
+      { text: "Supabase", color: "emerald" }
+    ],
+    rank: 21
+  },
+  {
+    id: "22",
+    title: "NSS EMEA hiring portal",
+    category: "College",
+    description: "A portal to manage hiring processes for NSS volunteers at EMEA College.",
+    detailedDescription: "Built with React and Airtable API, this portal help nodal officers to manage volunteer applications, track hiring status, and maintain a database of volunteers for the NSS unit at EMEA College.",
+    link: "https://hiring-system-omega.vercel.app/",
+    badges: [
+      { text: "React", color: "blue" },
+      { text: "Airtable", color: "orange" }
+    ],
+    rank: 22
+  },
+  {
+    id: "23",
+    title: "Alpha Abacus",
+    category: "Freelance",
+    description: "A simple abacus institute website and competetion registration portal.",
+    detailedDescription: "Built a React-based website for Alpha Abacus, an abacus training institute. The site includes information about courses offered and a registration portal for their competitions and its registration.",
+    link: "https://alphaabacus.in/",
+    badges: [
+      { text: "React", color: "blue" },
+     { text: "Supabase", color: "emerald" }
+    ],
+    rank: 23
+  },
+  {
+    id: "24",
+    title: "Falah Sports Shop",
+    category: "Freelance",
+    description: "A sports shop website for point adding and redeeming system. for loyal customers. users can see their points and redeem them for discounts on future purchases.",
+    detailedDescription: "Built a React-based website for Falah Sports Shop, a local sports store. The site includes product listings, contact information, and a loyalty point system for customers.",
+    link: "https://falahsportsshop.in/",
+    badges: [
+      { text: "React", color: "blue" },
+      { text: "Firebase", color: "orange" }
+    ],
+    rank: 24
   }
 ];
